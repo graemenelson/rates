@@ -10,3 +10,5 @@ Dotenv.load(".env.#{rates_env}", ".env")
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
 Que.connection = ActiveRecord
+
+require './app/fixer'
