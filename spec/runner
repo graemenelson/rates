@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby -Ispec
+Dir.glob('./spec/**/*_spec.rb').each do |file|
+  require file
+end
