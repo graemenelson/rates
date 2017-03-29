@@ -12,3 +12,5 @@ ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'])
 Que.connection = ActiveRecord
 
 require './app/fixer'
+require './app/importer'
+require './app/models'

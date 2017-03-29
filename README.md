@@ -23,3 +23,7 @@ I but together this application to showcase my programming styles for prospect c
 Run `bin/setup`, this will create a new database `rates-dev`, install the gems to `vendor/bundle`, and migrate the database.
 
 **DISCLAIMER:** This assumes your account has permissions to drop/create new postgresql databases. `bin/setup` will first try and drop `rates-dev`, so make sure you don't have a db with that name.  You can change the name in `.env.development`.
+
+## Notes
+
+* Application relies on `delegate` from  `ActiveSupport` instead of using the `Forwardable` module, only because the `Forwardable` modal does not work well with `Interactor` library.
