@@ -2,7 +2,6 @@ module Importer
   class Import
     include Interactor
 
-
     delegate :base,
              :date,
              to: :context

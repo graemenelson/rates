@@ -9,6 +9,7 @@ gem 'rake', '~> 12.0'
 gem 'connection_pool', '~> 2.2', '>= 2.2.1'
 gem 'httpclient', '~> 2.8', '>= 2.8.3'
 gem 'interactor', '~> 3.1'
+gem 'composite_primary_keys', '~> 9.0', '>= 9.0.6'
 
 group :test do
   gem 'minitest', '~> 5.9'
