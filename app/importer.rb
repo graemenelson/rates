@@ -1,1 +1,1 @@
-require_relative 'importer/fetch'
+require_relative 'importer/import'

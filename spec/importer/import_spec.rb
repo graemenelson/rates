@@ -1,9 +1,10 @@
 require 'spec_helper'
 
-describe Importer::Fetch do
-  subject { Importer::Fetch }
+describe Importer::Import do
+  subject { Importer::Import }
 
   describe 'with base and date' do
+    before { resetdb }
     let(:response) do
       {
         "base" => "USD",
@@ -19,6 +20,7 @@ describe Importer::Fetch do
         }
       }
     end
+
     it 'handles rates found' do
       WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
              .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response)))
@@ -26,10 +28,12 @@ describe Importer::Fetch do
       interactor = subject.call(base: 'USD', date: '2017-03-01')
       assert interactor.success?
 
+      Rate.all.count.must_equal 7
+
       rates = interactor.rates
       response['rates'].each_with_index do |(currency, price), idx|
         rates[idx].base.must_equal 'USD'
-        rates[idx].date.must_equal '2017-03-01'
+        rates[idx].date.must_equal Date.parse('2017-03-01')
         rates[idx].quoted.must_equal currency
         rates[idx].price.must_equal price
       end

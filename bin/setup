@@ -9,3 +9,6 @@ RATES_ENV=development bundle exec rake db:migrate
 
 dropdb rates-test; createdb rates-test
 RATES_ENV=test bundle exec rake db:migrate
+
+# run the tests
+bundle exec rake
