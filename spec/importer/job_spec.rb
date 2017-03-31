@@ -29,11 +29,11 @@ describe Importer::Job do
   end
 
   describe '#run' do
-    it 'destroys job and requeues with the current currency and date from calling the Organizer' do
+    it 'destroys job and requeues with currency and date from the Organizer context, rates are not queued' do
       subject.call({currency: 'USD'})
       orig_job = QueJob.for(subject.to_s).first
 
-      Importer::Organizer.stub(:call, OpenStruct.new(success?: true, date: '2017-01-03', currency: 'USD')) do
+      Importer::Organizer.stub(:call, OpenStruct.new(success?: true, date: '2017-01-03', currency: 'USD', rates: [build(:rate)])) do
         Que::Job.work('importer')
       end
 
@@ -44,6 +44,7 @@ describe Importer::Job do
       args = new_job.args.first
       args['currency'].must_equal 'USD'
       args['date'].must_equal '2017-01-03'
+      args['rates'].must_be_nil
     end
   end
 end

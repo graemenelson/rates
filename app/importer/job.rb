@@ -30,9 +30,11 @@ module Importer
     end
 
     def run(args)
-      i = Importer::Organizer.call(args)
-      destroy
-      self.class.call(i.to_h)
+      ActiveRecord::Base.transaction do
+        i = Importer::Organizer.call(args)
+        destroy
+        self.class.call(i.to_h.slice(:date, :currency))
+      end
     end
 
   end
