@@ -35,7 +35,7 @@ module Importer
     end
 
     def default
-      '2010-01-01'
+      Date.today - 30.days
     end
   end
 end

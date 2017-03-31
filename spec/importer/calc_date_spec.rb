@@ -7,7 +7,7 @@ describe Importer::CalcDate do
   it 'handles no recent rate by loading default date and not increment by one day' do
     i = subject.call(currency: 'USD')
     assert i.success?
-    i.date.must_equal '2010-01-01'
+    i.date.must_equal (Date.today - 30.days)
   end
 
   it 'handles recent rate by loading date and increment by one day' do
