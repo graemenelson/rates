@@ -1,6 +1,5 @@
 module Importer
   class Job < Que::Job
-    include Interactor
     @queue = 'importer'
 
     # Using a class to act as the interactor, since the interactor and que gem
@@ -31,7 +30,9 @@ module Importer
     end
 
     def run(args)
-      puts args.inspect
+      i = Importer::Organizer.call(args)
+      destroy
+      self.class.call(i.to_h)
     end
 
   end
