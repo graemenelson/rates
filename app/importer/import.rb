@@ -2,12 +2,12 @@ module Importer
   class Import
     include Interactor
 
-    delegate :base,
+    delegate :currency,
              :date,
              to: :context
 
     def call
-      context.fail!(error: 'base is required') unless base
+      context.fail!(error: 'currency is required') unless currency
       context.fail!(error: 'date is required') unless date
 
       import!
@@ -16,8 +16,8 @@ module Importer
     private
 
     def import!
-      context.rates = Fixer::Api.rates(base: base, date: date)['rates'].map do |(curr,price)|
-        Rate.create(base: base, date: date, quoted: curr, price: price)
+      context.rates = Fixer::Api.rates(base: currency, date: date)['rates'].map do |(curr,price)|
+        Rate.create(base: currency, date: date, quoted: curr, price: price)
       end
     end
 

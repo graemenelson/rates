@@ -8,6 +8,8 @@ module Importer
     class Enqueue
       include Interactor
 
+      delegate :currency, to: :context
+
       def call
         context.fail!(error: "currency is required") unless currency
         context.fail!(error: "job already exists for '#{currency}'") if job_exists?
@@ -16,10 +18,6 @@ module Importer
       end
 
       private
-
-      def currency
-        context.currency
-      end
 
       def job_exists?
         QueJob.where(job_class: Job.to_s).to_a.find do |job|

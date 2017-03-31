@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Importer::Import do
   subject { Importer::Import }
 
-  describe 'with base and date' do
+  describe 'with currency and date' do
     before { resetdb }
     let(:response) do
       {
@@ -25,7 +25,7 @@ describe Importer::Import do
       WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
              .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response)))
 
-      interactor = subject.call(base: 'USD', date: '2017-03-01')
+      interactor = subject.call(currency: 'USD', date: '2017-03-01')
       assert interactor.success?
 
       Rate.all.count.must_equal 7
@@ -43,20 +43,20 @@ describe Importer::Import do
       WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
              .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response.merge('rates' => []))))
 
-      interactor = subject.call(base: 'USD', date: '2017-03-01')
+      interactor = subject.call(currency: 'USD', date: '2017-03-01')
       assert interactor.success?
       interactor.rates.must_be :empty?
     end
   end
 
-  it 'fails with missing base' do
+  it 'fails with missing currency' do
     interactor = subject.call(date: '2017-03-01')
     refute interactor.success?
-    interactor.error.must_match /base is required/
+    interactor.error.must_match /currency is required/
   end
 
   it 'fails with missing date' do
-    interactor = subject.call(base: 'USD')
+    interactor = subject.call(currency: 'USD')
     refute interactor.success?
     interactor.error.must_match /date is required/
   end

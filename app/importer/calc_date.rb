@@ -2,6 +2,8 @@ module Importer
   class CalcDate
     include Interactor
 
+    delegate :currency, to: :context
+
     def call
       context.fail!(error: 'currency is required') unless currency
 
@@ -9,14 +11,6 @@ module Importer
     end
 
     private
-
-    def currency
-      context.currency
-    end
-
-    def date
-      context.date
-    end
 
     def calc_date!
       # NOTE: could have easily broke these out into their own interactors
