@@ -14,4 +14,5 @@ gem 'composite_primary_keys', '~> 9.0', '>= 9.0.6'
 group :test do
   gem 'minitest', '~> 5.9'
   gem 'webmock', '~> 2.3', '>= 2.3.2'
+  gem 'factory_girl', '~> 4.8'
 end

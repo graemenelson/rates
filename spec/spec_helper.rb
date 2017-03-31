@@ -7,6 +7,8 @@ require 'minitest/mock'
 require 'webmock/minitest'
 
 class Minitest::Spec
+  include FactoryGirl::Syntax::Methods
+
   let(:fixer_endpoint) { Fixer::Api.endpoint }
 
   def resetdb
@@ -20,3 +22,6 @@ class Minitest::Spec
     { headers: {"Content-Type" => "application/json; charset=utf-8"} }
   end
 end
+
+# Loads the factories
+FactoryGirl.find_definitions

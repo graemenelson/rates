@@ -5,6 +5,7 @@ describe Importer::Organizer do
 
   it 'calls expected interactors' do
     subject.organized.must_equal [
+      Importer::CalcDate,
       Importer::Import
     ]
   end
