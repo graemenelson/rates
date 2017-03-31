@@ -17,6 +17,7 @@ I but together this application to showcase my programming styles for prospect c
 
 * Ruby 2.4.0 (you can try other version by changing .ruby-version)
 * Postgresql
+* [Foreman](https://github.com/ddollar/foreman) to up from the Procfile
 
 ## Setup
 
@@ -27,3 +28,4 @@ Run `bin/setup`, this will create a new database `rates-dev`, install the gems t
 ## Notes
 
 * Application relies on `delegate` from  `ActiveSupport` instead of using the `Forwardable` module, only because the `Forwardable` modal does not work well with `Interactor` library.
+* Applications also uses `try` from `ActiveSupport`.
