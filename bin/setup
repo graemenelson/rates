@@ -10,5 +10,12 @@ RATES_ENV=development bundle exec rake db:migrate
 dropdb rates-test; createdb rates-test
 RATES_ENV=test bundle exec rake db:migrate
 
+# Install node modules
+rm -rf node_modules
+yarn install
+
+# build web assets
+webpack
+
 # run the tests
 bundle exec rake

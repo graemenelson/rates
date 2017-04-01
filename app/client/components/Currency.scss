@@ -1,0 +1,12 @@
+.currencies__item {
+  display: inline-block;
+  width: 12%;
+  text-align: center;
+  padding: 20px 0;
+  cursor: pointer;
+
+  &.currencies__item--selected {
+    background-color: #446CB3;
+    color: white;
+  }
+}

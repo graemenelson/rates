@@ -18,6 +18,7 @@ I but together this application to showcase my programming styles for prospect c
 * Ruby 2.4.0 (you can try other version by changing .ruby-version)
 * Postgresql
 * [Foreman](https://github.com/ddollar/foreman) to up from the Procfile
+* [yarn](https://yarnpkg.com/en/) to install npm/node packages
 
 ## Setup
 
