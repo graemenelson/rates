@@ -1,2 +1,5 @@
 .DS_Store
 vendor/bundle
+node_modules/
+public/js/client.bundle.js
+.bundle/
