@@ -1,6 +1,7 @@
 module Importer
   class Job < Que::Job
-    @queue = 'importer'
+    @queue          = 'importer'
+    @retry_interval = 1.minute
 
     # Using a class to act as the interactor, since the interactor and que gem
     # conflict with each other for the #run method.

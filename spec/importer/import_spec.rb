@@ -47,6 +47,17 @@ describe Importer::Import do
       assert interactor.success?
       interactor.rates.must_be :empty?
     end
+
+    it 'raises unique constraint issue when existing base, quoted, date exist' do
+      WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
+             .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response)))
+
+      create(:rate, base: 'USD', quoted: 'AUD', date: '2017-03-01')
+
+      proc {
+        subject.call(currency: 'USD', date: '2017-03-01')
+      }.must_raise ActiveRecord::RecordNotUnique
+    end
   end
 
   it 'fails with missing currency' do
