@@ -21,38 +21,33 @@ describe Importer::Import do
       }
     end
 
-    it 'handles rates found' do
+    it 'handles rate found' do
       WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
              .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response)))
 
       interactor = subject.call(currency: 'USD', date: '2017-03-01')
       assert interactor.success?
 
-      Rate.all.count.must_equal 7
-
-      rates = interactor.rates
-      response['rates'].each_with_index do |(currency, price), idx|
-        rates[idx].base.must_equal 'USD'
-        rates[idx].date.must_equal Date.parse('2017-03-01')
-        rates[idx].quoted.must_equal currency
-        rates[idx].price.must_equal price
-      end
+      rate = interactor.rate
+      rate.currency.must_equal 'USD'
+      rate.date.must_equal Date.parse('2017-03-01')
+      rate.prices.must_equal response['rates']
     end
 
-    it 'handles no rates found' do
+    it 'handles no rate found' do
       WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
              .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response.merge('rates' => []))))
 
       interactor = subject.call(currency: 'USD', date: '2017-03-01')
       assert interactor.success?
-      interactor.rates.must_be :empty?
+      interactor.rate.must_be_nil
     end
 
     it 'raises unique constraint issue when existing base, quoted, date exist' do
       WebMock.stub_request(:get, "#{fixer_endpoint}/2017-03-01?base=USD")
              .to_return(fixer_response_headers.merge(status: 200, body: JSON.generate(response)))
 
-      create(:rate, base: 'USD', quoted: 'AUD', date: '2017-03-01')
+      create(:rate, currency: 'USD', date: '2017-03-01')
 
       proc {
         subject.call(currency: 'USD', date: '2017-03-01')

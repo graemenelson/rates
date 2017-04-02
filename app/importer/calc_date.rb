@@ -13,9 +13,8 @@ module Importer
     private
 
     def calc_date!
-      # NOTE: could have easily broke these out into their own interactors
-      # and have CalcDate be an Organizer. Decided to keep here since I
-      # didn't really see any benefit to breaking it out.
+      # FIXME: skip weekends, since forex is closed
+
       context.date = increment_date || load_and_increment_date || default
     end
 
@@ -24,18 +23,24 @@ module Importer
     end
 
     def load_and_increment_date
-      rate = Rate.where(base: currency).order(date: :desc).first
+      rate = Rate.where(currency: currency).order(date: :desc).first
       increment(rate.try(:date))
     end
 
     def increment(date)
       return unless date
       date = date.is_a?(Date) ? date : Date.parse(date)
-      date.tomorrow.to_s
+      skip_weekend(date.tomorrow).to_s
+    end
+
+    def skip_weekend(date)
+      return date + 2.day if date.saturday?
+      return date + 1.day if date.sunday?
+      date
     end
 
     def default
-      Date.today - 30.days
+      skip_weekend(Date.today - 30.days)
     end
   end
 end

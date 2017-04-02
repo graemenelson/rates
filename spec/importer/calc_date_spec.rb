@@ -4,23 +4,23 @@ describe Importer::CalcDate do
   subject { Importer::CalcDate }
   before  { resetdb }
 
-  it 'handles no recent rate by loading default date and not increment by one day' do
-    i = subject.call(currency: 'USD')
-    assert i.success?
-    i.date.must_equal (Date.today - 30.days)
-  end
-
   it 'handles recent rate by loading date and increment by one day' do
-    create(:rate, base: 'USD', quoted: 'EUR', date: '2017-03-03')
+    create(:rate, currency: 'USD', prices: {}, date: '2017-03-02')
     i = subject.call(currency: 'USD')
     assert i.success?
-    i.date.must_equal '2017-03-04'
+    i.date.must_equal '2017-03-03'
   end
 
   it 'handles existing date by increment by one day' do
-    i = subject.call(currency: 'USD', date: '2017-03-04')
+    i = subject.call(currency: 'USD', date: '2017-03-02')
     assert i.success?
-    i.date.must_equal '2017-03-05'
+    i.date.must_equal '2017-03-03'
+  end
+
+  it 'handles skipping weekend when next date fails on saturday (since forex market is closed)' do
+    i = subject.call(currency: 'USD', date: '2017-03-03')
+    assert i.success?
+    i.date.must_equal '2017-03-06'
   end
 
   it 'fails with missing currency' do
