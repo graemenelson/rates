@@ -1,9 +1,37 @@
 .rates {
   width: 100%;
+  border-top: 1px solid #efefef;
 
-  &.rates__empty {
+  &.rates__initial,
+  &.rates__empty,
+  &.rates__loading {
     text-align: center;
     padding-top: 150px;
     color: #999;
   }
+
+  &.rates__present {
+    color: #333;
+    padding-top: 30px;
+  }
+
+  table {
+    width: 90%;
+    margin: 0 auto;
+
+    th {
+      font-weight: normal;
+      font-size: 0.90em;
+      border-bottom: 1px solid #efefef;
+      color: #fff;
+      background-color: #446CB3;
+      padding: 3px 3px;
+    }
+
+    td {
+      padding: 3px 3px;
+      text-align: right;
+    }
+  }
+
 }

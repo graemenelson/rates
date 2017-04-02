@@ -1,11 +1,13 @@
-import { RECEIVED_RATES } from '../actions'
+import { RATES_RECEIVED, RATES_REQUESTED } from '../actions'
 
-const rates = (state = {data: [], isFetching: false}, action) => {
+const rates = (state = {headers: [], rows: [], currency: null, isFetching: false}, action) => {
   switch(action.type) {
 
-    case RECEIVED_RATES:
-      console.log(action)
-      return state
+    case RATES_REQUESTED:
+      return Object.assign({}, state, {isFetching: true, currency: action.currency})
+
+    case RATES_RECEIVED:
+      return Object.assign({}, state, action.json, {isFetching: false})
 
     default:
       return state
