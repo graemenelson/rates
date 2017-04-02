@@ -1,13 +1,6 @@
 import { connect } from 'react-redux'
 import Currencies from '../components/Currencies'
-
-// TODO: move into actions
-const currencyClick = (currency) => {
-  return {
-    type: 'CURRENCY_CLICK',
-    currency
-  }
-}
+import { currencyClick } from '../actions'
 
 const mapStateToProps = (state) => {
   return { currencies: state.currencies }
@@ -21,9 +14,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const CurrencyList = connect(
+const CurrenciesList = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Currencies)
 
-export default CurrencyList
+export default CurrenciesList

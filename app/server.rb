@@ -14,5 +14,13 @@ Cuba.define do
     on root do
       res.write partial('rates', {})
     end
+
+    on "rates/:currency.json" do |currency|
+      rates = Rates::Fetch.call(currency: currency).rates
+      #presenter = Server::Presenters::Rates.new(currency, rates)
+
+      res.headers["Content-Type"] = "application/json; charset=utf-8"
+      res.write(presenter.to_json)
+    end
   end
 end

@@ -1,11 +1,13 @@
 import styles from './App.scss'
 
 import React from 'react'
-import CurrencyList from '../containers/CurrencyList'
+import CurrenciesList from '../containers/CurrenciesList'
+import RatesList from '../containers/RatesList'
 
 const App = () => (
-  <div class='app-container'>
-    <CurrencyList />
+  <div className='app-container'>
+    <CurrenciesList />
+    <RatesList />
   </div>
 )
 

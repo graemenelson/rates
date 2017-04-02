@@ -14,3 +14,4 @@ Que.connection = ActiveRecord
 require './app/fixer'
 require './app/importer'
 require './app/models'
+require './app/rates'
