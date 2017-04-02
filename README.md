@@ -24,6 +24,8 @@ I but together this application to showcase my programming styles for prospectiv
 
 Run `bin/setup`, this will create a new database `rates-dev`, install the gems to `vendor/bundle`, install node modules to `node_modules` and migrate the database, and run the specs.
 
+**NOTE:** You can run `bin/setup` multiple times, to get the application/database back to a default state.
+
 **DISCLAIMER:** This assumes your account has permissions to drop/create new postgresql databases. `bin/setup` will first try and drop `rates-dev`, so make sure you don't have a db with that name.  You can change the name in `.env.development`.
 
 ## Starting Up
